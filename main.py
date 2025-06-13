@@ -8,11 +8,9 @@ CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI")
 
-
 @app.route("/")
 def index():
-    return "Backend para autenticação do Spotify está rodando!"
-
+    return "Backend do Spotify está rodando!"
 
 @app.route("/connect")
 def connect():
@@ -26,14 +24,12 @@ def connect():
     )
     return redirect(auth_url)
 
-
 @app.route("/callback")
 def callback():
     code = request.args.get("code")
     if not code:
         return "Erro: código de autorização não recebido"
 
-    # Troca o código pelo token
     response = requests.post(
         "https://accounts.spotify.com/api/token",
         data={
@@ -47,7 +43,7 @@ def callback():
     )
 
     token_info = response.json()
-
     return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
+
 
 
