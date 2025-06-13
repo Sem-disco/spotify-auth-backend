@@ -14,8 +14,8 @@ def index():
     return "Backend para autenticação do Spotify está rodando!"
 
 
-@app.route("/login")
-def login():
+@app.route("/connect")
+def connect():
     scope = "user-read-playback-state user-modify-playback-state"
     auth_url = (
         f"https://accounts.spotify.com/authorize"
@@ -48,4 +48,8 @@ def callback():
 
     token_info = response.json()
 
-    return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
+    if "access_token" in token_info:
+        return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
+    else:
+        return f"Erro na autenticação: {token_info}"
+
