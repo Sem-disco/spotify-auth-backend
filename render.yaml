@@ -3,7 +3,7 @@ services:
     name: spotify-auth-backend
     env: python
     buildCommand: ""
-    startCommand: "python main.py"
+    startCommand: python main.py
     envVars:
       - key: SPOTIFY_CLIENT_ID
         value: 935fcd06bb444612afdf2023b3f5bbee
