@@ -10,13 +10,13 @@ REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI")
 
 @app.route("/")
 def index():
-    return "Backend do Spotify está rodando!"
+    return "Backend para autenticação do Spotify está rodando!"
 
 @app.route("/connect")
 def connect():
     scope = "user-read-playback-state user-modify-playback-state"
     auth_url = (
-        f"https://accounts.spotify.com/authorize"
+        "https://accounts.spotify.com/authorize"
         f"?response_type=code"
         f"&client_id={CLIENT_ID}"
         f"&scope={scope}"
@@ -43,7 +43,13 @@ def callback():
     )
 
     token_info = response.json()
+
     return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
 
 
 
