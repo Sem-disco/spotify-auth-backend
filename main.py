@@ -48,8 +48,6 @@ def callback():
 
     token_info = response.json()
 
-    if "access_token" in token_info:
-        return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
-    else:
-        return f"Erro na autenticação: {token_info}"
+    return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
+
 
