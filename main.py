@@ -4,7 +4,6 @@ import requests
 
 app = Flask(__name__)
 
-# Corrigido: remove espaços/quebras de linha
 CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID", "").strip()
 CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET", "").strip()
 REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "").strip()
@@ -15,10 +14,9 @@ def index():
 
 @app.route("/connect")
 def connect():
-    # Debug print para logs
-    print("DEBUG - CLIENT_ID:", CLIENT_ID)
-    print("DEBUG - CLIENT_SECRET:", CLIENT_SECRET)
-    print("DEBUG - REDIRECT_URI:", REDIRECT_URI)
+    print("DEBUG - CLIENT_ID:", repr(CLIENT_ID))
+    print("DEBUG - CLIENT_SECRET:", repr(CLIENT_SECRET))
+    print("DEBUG - REDIRECT_URI:", repr(REDIRECT_URI))
 
     scope = "user-read-playback-state user-modify-playback-state"
     auth_url = (
@@ -29,6 +27,7 @@ def connect():
         f"&redirect_uri={REDIRECT_URI}"
     )
 
+    print("DEBUG - AUTH_URL:", repr(auth_url))  # Aqui veremos a URL final com possíveis \n
     return redirect(auth_url)
 
 @app.route("/callback")
