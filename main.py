@@ -4,9 +4,10 @@ import requests
 
 app = Flask(__name__)
 
-CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
-CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
-REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI")
+# Corrigido: remove espaços/quebras de linha
+CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID", "").strip()
+CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET", "").strip()
+REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "").strip()
 
 @app.route("/")
 def index():
@@ -14,7 +15,8 @@ def index():
 
 @app.route("/connect")
 def connect():
-        print("DEBUG - CLIENT_ID:", CLIENT_ID)
+    # Debug print para logs
+    print("DEBUG - CLIENT_ID:", CLIENT_ID)
     print("DEBUG - CLIENT_SECRET:", CLIENT_SECRET)
     print("DEBUG - REDIRECT_URI:", REDIRECT_URI)
 
@@ -26,6 +28,7 @@ def connect():
         f"&scope={scope}"
         f"&redirect_uri={REDIRECT_URI}"
     )
+
     return redirect(auth_url)
 
 @app.route("/callback")
@@ -41,19 +44,13 @@ def callback():
             "code": code,
             "redirect_uri": REDIRECT_URI,
             "client_id": CLIENT_ID,
-            "client_secret": CLIENT_SECRET
+            "client_secret": CLIENT_SECRET,
         },
         headers={"Content-Type": "application/x-www-form-urlencoded"}
     )
 
+    if response.status_code != 200:
+        return f"Erro ao obter token: {response.text}"
+
     token_info = response.json()
-
-    return f"Autenticado com sucesso! Access Token: {token_info.get('access_token')}"
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-
-
-
-
+    return token_info
