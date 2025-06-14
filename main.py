@@ -14,6 +14,10 @@ def index():
 
 @app.route("/connect")
 def connect():
+        print("DEBUG - CLIENT_ID:", CLIENT_ID)
+    print("DEBUG - CLIENT_SECRET:", CLIENT_SECRET)
+    print("DEBUG - REDIRECT_URI:", REDIRECT_URI)
+
     scope = "user-read-playback-state user-modify-playback-state"
     auth_url = (
         "https://accounts.spotify.com/authorize"
