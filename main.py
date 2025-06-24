@@ -5,18 +5,15 @@ from urllib.parse import quote
 
 app = Flask(__name__)
 
-# Carregar variáveis de ambiente
 CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID", "").strip()
 CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET", "").strip()
 REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "").strip()
 ACCESS_TOKEN_TEMP = os.getenv("ACCESS_TOKEN_TEMP", "").strip()
 
-# Página inicial
 @app.route("/")
 def home():
     return "🔊 Backend do Spotify está no ar!"
 
-# Conectar ao Spotify
 @app.route("/connect")
 def connect():
     if not CLIENT_ID or not CLIENT_SECRET or not REDIRECT_URI:
@@ -32,7 +29,6 @@ def connect():
     )
     return redirect(auth_url)
 
-# Receber o código de autorização e trocar por token
 @app.route("/callback")
 def callback():
     code = request.args.get("code")
@@ -53,7 +49,6 @@ def callback():
 
     return jsonify(response.json())
 
-# Endpoint para tocar um álbum a partir do Raspberry Pi
 @app.route("/play", methods=["POST"])
 def play_album():
     album_uri = request.json.get("album_uri")
@@ -80,7 +75,6 @@ def play_album():
 
     return jsonify({"message": "Reprodução iniciada com sucesso!"})
 
-# Ajuste final para o Render
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port, debug=True)
