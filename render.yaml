@@ -2,12 +2,16 @@ services:
   - type: web
     name: spotify-auth-backend
     env: python
-    buildCommand: ""
-    startCommand: python main.py
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
     envVars:
       - key: SPOTIFY_CLIENT_ID
         value: 935fcd06bb444612afdf2023b3f5bbee
       - key: SPOTIFY_CLIENT_SECRET
         value: baa76034ecfd43a5b63cf93b1f01ddf0
       - key: SPOTIFY_REDIRECT_URI
-        value: https://spotify-auth-backend.onrender.com/callback
+        value: https://spotify-auth-backend-ir7p.onrender.com/callback
+      - key: ACCESS_TOKEN_TEMP
+        value: BQCedeDqZ3Wqzo6...
+      - key: REFRESH_TOKEN_TEMP
+        value: AQCPWyHFTne5VG1g...
