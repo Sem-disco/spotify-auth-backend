@@ -63,6 +63,7 @@ def receber_rfid():
 
 @app.route("/connect")
 def connect():
+    """Redirects the user to Spotify's OAuth authorization page."""
     scope = "user-read-playback-state user-modify-playback-state streaming"
     auth_url = (
         "https://accounts.spotify.com/authorize"
@@ -71,7 +72,7 @@ def connect():
         f"&redirect_uri={SPOTIFY_REDIRECT_URI}"
         f"&scope={scope}"
     )
-    return jsonify({"auth_url": auth_url})
+    return redirect(auth_url)
 
 @app.route("/callback")
 def callback():

@@ -11,7 +11,5 @@ services:
         value: baa76034ecfd43a5b63cf93b1f01ddf0
       - key: SPOTIFY_REDIRECT_URI
         value: https://spotify-auth-backend-ir7p.onrender.com/callback
-      - key: ACCESS_TOKEN_TEMP
-        value: BQCedeDqZ3Wqzo6...
-      - key: REFRESH_TOKEN_TEMP
+      - key: SPOTIFY_REFRESH_TOKEN
         value: AQCPWyHFTne5VG1g...
